@@ -13,23 +13,11 @@ class Student(models.Model):
         validators=[MinValueValidator(1000000000),
                     MaxValueValidator(9999999999)])
     date_of_birth = models.DateField()
-    group = models.ForeignKey('Group')
+    group = models.ForeignKey('groups.Group')
 
     def __unicode__(self):
         return '{0} {1}'.format(self.surname, self.first_name)
 
     def full_name(self):
         return '{0} {1} {2}'.format(self.surname, self.first_name, self.patronymic)
-
-
-class Group(models.Model):
-    name = models.CharField(max_length=20)
-    headman = models.ForeignKey(Student, related_name='headman', null=True, blank=True)
-
-    def __unicode__(self):
-        return self.name
-
-    def amount_person(self):
-        students = Student.objects.filter(group=self.id)
-        return students.count()
 

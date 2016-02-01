@@ -1,7 +1,7 @@
 from django.contrib import admin
 
-from .models import Student, Group
-
+from .models import Student
+from groups.models import Group
 
 class GroupInline(admin.TabularInline):
     model = Group
@@ -13,20 +13,4 @@ class StudentAdmin(admin.ModelAdmin):
     search_fields = ['number_card']
     inlines = [GroupInline,]
 
-
-class GroupAdmin(admin.ModelAdmin):
-    list_display = ('name', 'amount_person')
-
-    def get_form(self, request, obj=None, **kwargs):
-        request.current_object = obj
-        return super(GroupAdmin, self).get_form(request, obj, **kwargs)
-
-    def formfield_for_foreignkey(self, db_field, request=None, **kwargs):
-        instance = request.current_object
-        if db_field.name == "headman":
-            kwargs["queryset"] = Student.objects.filter(group=instance.id)
-        return super(GroupAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
-
-
 admin.site.register(Student, StudentAdmin)
-admin.site.register(Group, GroupAdmin)
