@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+
+{% block title %} Студенты {% endblock title %}
+
+
+{% block content %}
+
+
+{% if messages %}
+  {% for message in messages %}
+  <div class="panel panel-success">
+    <div class="panel-heading">
+      <h3 class="panel-title">{{ message }}</h3>
+    </div>
+  </div>
+  {% endfor %}
+{% endif %}
+
+  <form action="{% url 'students:add' %}">
+  <button type="submit" class="btn btn-success" value="Add">
+    <span class="glyphicon glyphicon-plus"></span> Добавить студента
+  </button>
+  </form>
+  {% if object_list %}
+  <h2>Список студентов</h2>
+  <table  class="table table-striped ">
+    <thead>
+      <tr>
+       <th>#</th><th>Номер студ билета</th><th>ФИО</th><th>Дата рождения</th><th></th><th></th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for student in object_list %}
+      <tr>
+       <td>{{ forloop.counter }}</td>
+       <td>{{ student.number_card }}</td>
+       <td class="intro-text"><a href="{% url 'students:detail' student.id %}">
+           {{ student.full_name }}</a></td>
+       <td>{{ student.date_of_birth|date:'m/d/Y' }}</td>
+        <td>
+          <form action="{% url 'students:edit' student.id %}">
+            <button type="submit" class="btn btn-warning" value="Edit">
+              <span class="glyphicon glyphicon-pencil"></span> Редактировать
+            </button>
+          </form>
+        </td>
+        <td>
+          <form action="{% url 'students:delete' student.id %}">
+            <button type="submit" class="btn btn-danger" value="Delete">
+              <span class="glyphicon glyphicon-trash"></span> Удалить
+            </button>
+          </form>
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+    <p><br />Нет студентов.</p>
+  {% endif %}
+
+{% endblock content %}

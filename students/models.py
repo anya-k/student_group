@@ -18,6 +18,9 @@ class Student(models.Model):
     def __unicode__(self):
         return '{0} {1}'.format(self.surname, self.first_name)
 
+    def full_name(self):
+        return '{0} {1} {2}'.format(self.surname, self.first_name, self.patronymic)
+
 
 class Group(models.Model):
     name = models.CharField(max_length=20)
@@ -25,4 +28,8 @@ class Group(models.Model):
 
     def __unicode__(self):
         return self.name
+
+    def amount_person(self):
+        students = Student.objects.filter(group=self.id)
+        return students.count()
 

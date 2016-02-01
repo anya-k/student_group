@@ -15,6 +15,7 @@ class StudentAdmin(admin.ModelAdmin):
 
 
 class GroupAdmin(admin.ModelAdmin):
+    list_display = ('name', 'amount_person')
 
     def get_form(self, request, obj=None, **kwargs):
         request.current_object = obj
