@@ -20,5 +20,5 @@ from django.conf import settings
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^', include('students.urls', namespace="students")),
+    url(r'^', include('students.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

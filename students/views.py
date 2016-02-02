@@ -1,23 +1,37 @@
 from django.shortcuts import render
-from django.views.generic.list import ListView
-from django.views.generic.detail import DetailView
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views import generic
 from django.core.urlresolvers import reverse_lazy
 from students.models import Student
 from students.forms import StudentForm
+from groups.models import Group
 
-
-class StudentListView(ListView):
+class StudentListView(generic.ListView):
     model = Student
 
-class StudentDetailView(DetailView):
+
+class StudentDetailView(generic.DetailView):
     model = Student
 
-class StudentCreateView(CreateView):
-    model = Student
+    def get_context_data(self, **kwargs):
+        context_data = super(StudentDetailView, self).get_context_data(**kwargs)
+        is_headman = Group.objects.filter(headman=self.object.id)
+        context_data['is_headman'] = is_headman.count()
+        return context_data
 
-class StudentUpdateView(UpdateView):
-    model = Student
 
-class StudentDeleteView(DeleteView):
+class StudentCreateView(generic.CreateView):
     model = Student
+    form_class = StudentForm
+    success_url = reverse_lazy('students:index')
+
+
+class StudentUpdateView(generic.UpdateView):
+    model = Student
+    form_class = StudentForm
+    success_url = reverse_lazy('students:index')
+
+
+class StudentDeleteView(generic.DeleteView):
+    model = Student
+    form_class = StudentForm
+    success_url = reverse_lazy('students:index')

@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %} Данные студента {% endblock title %}
+
+
+{% block content %}
+  {% if student %}
+  <h2>{{ student.full_name|upper }}</h2>
+
+  <table  class="table ">
+  <tbody>
+   <tr>
+     <td>Дата рождения</td>
+     <td>{{ student.date_of_birth|date:'j F Y' }}</td>
+   </tr>
+   <tr>
+      <td>Группа</td>
+      <td>{{ student.group }}</td>
+   </tr>
+   <tr>
+      <td>Староста</td>
+      <td>
+          {% if is_headman %}
+              <button class="btn btn-success">
+                <span class="glyphicon glyphicon-plus"></span>
+              </button>
+          {% else %}
+              <button class="btn btn-danger">
+                <span class="glyphicon glyphicon-minus"></span>
+              </button>
+          {% endif %}
+      </td>
+   </tr>
+  </tbody>
+  </table>
+  {% else %}
+    <p>Нет данных о студенте.</p>
+  {% endif %}
+      
+
+
+{% endblock content %}

@@ -18,14 +18,15 @@
   {% endfor %}
 {% endif %}
 
-  <form action="{% url 'students:add' %}">
-  <button type="submit" class="btn btn-success" value="Add">
-    <span class="glyphicon glyphicon-plus"></span> Добавить студента
-  </button>
+  <form class="text-right" action="{% url 'students:add' %}">
+      <button type="submit" class="btn btn-success" value="Add">
+        <span class="glyphicon glyphicon-plus"></span> Добавить студента
+      </button>
   </form>
+
   {% if object_list %}
   <h2>Список студентов</h2>
-  <table  class="table table-striped ">
+   <table  class="table table-striped ">
     <thead>
       <tr>
        <th>#</th><th>Номер студ билета</th><th>ФИО</th><th>Дата рождения</th><th></th><th></th>
