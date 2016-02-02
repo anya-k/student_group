@@ -2,7 +2,7 @@
 {% load staticfiles %}
 
 
-{% block title %} Студенты {% endblock title %}
+{% block title %} Группы {% endblock title %}
 
 
 {% block content %}
@@ -18,42 +18,43 @@
   {% endfor %}
 {% endif %}
 
-  <form class="text-right" action="{% url 'students:add' %}">
+  <form class="text-right" action="{% url 'groups:add' %}">
       <button type="submit" class="btn btn-success" value="Add">
-        <span class="glyphicon glyphicon-plus"></span> Добавить студента
+        <span class="glyphicon glyphicon-plus"></span> Добавить группу
       </button>
   </form>
 
-  <h2>{{ h2_text }}</h2>
   {% if object_list %}
+  <h2>Список групп</h2>
    <table  class="table table-striped ">
     <thead>
       <tr>
-       <th>#</th><th>ФИО</th><th>Староста</th><th></th><th></th>
+       <th>#</th><th>Группа</th><th>Количество</th><th>Староста</th><th></th><th></th>
       </tr>
     </thead>
     <tbody>
-    {% for student in object_list %}
+    {% for group in object_list %}
       <tr>
        <td>{{ forloop.counter }}</td>
-       <td class="intro-text"><a href="{% url 'students:detail' student.id %}">
-           {{ student.full_name }}</a></td>
+       <td class="intro-text"><a href="{% url 'students:index' %}?group_id={{ group.id }}">
+           {{ group.name }}</a></td>
+       <td>{{ group.amount_person }}</td>
        <td>
-           {% if student in headmans %}
-                <span class="glyphicon glyphicon-plus"></span>
+           {% if group.headman %}
+                {{ group.headman.full_name }}
            {% else %}
-                <span class="glyphicon glyphicon-minus"></span>
+                Не выбран
            {% endif %}
-           </td>
-        <td>
-          <form action="{% url 'students:edit' student.id %}">
+       </td>
+       <td>
+          <form action="{% url 'groups:edit' group.id %}">
             <button type="submit" class="btn btn-warning" value="Edit">
               <span class="glyphicon glyphicon-pencil"></span> Редактировать
             </button>
           </form>
         </td>
         <td>
-          <form action="{% url 'students:delete' student.id %}">
+          <form action="{% url 'groups:delete' group.id %}">
             <button type="submit" class="btn btn-danger" value="Delete">
               <span class="glyphicon glyphicon-trash"></span> Удалить
             </button>
