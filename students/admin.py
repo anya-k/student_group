@@ -3,6 +3,7 @@ from django.contrib import admin
 from .models import Student
 from groups.models import Group
 
+
 class GroupInline(admin.TabularInline):
     model = Group
     extra = 1

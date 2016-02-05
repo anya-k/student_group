@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load staticfiles %}
+{% load i18n %}
 
 <html lang="en">
 <head>
@@ -42,7 +43,15 @@
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
              {% block auth %}
-             {% endblock auth %}
+                {% if user.is_authenticated %}
+                    {% trans "Logged in" %}: {{ user.username }}
+                    (<a href="{% url 'auth_logout' %}">{% trans "Log out" %}</a> |
+                    <a href="{% url 'auth_password_change' %}">{% trans "Change password" %}</a>)
+                {% else %}
+                   <a href="{% url 'auth_login' %}">{% trans "Log in" %}</a>
+                {% endif %}
+
+            {% endblock %}
 
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
