@@ -7,8 +7,11 @@ from django.contrib import messages
 from groups.models import Group
 from groups.forms import GroupForm, GroupUpdateForm
 from students.models import Student
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
 
+@method_decorator(login_required, name='dispatch')
 class GroupListView(ListView):
     model = Group
 
@@ -17,6 +20,7 @@ class GroupDetailView(DetailView):
     model = Group
 
 
+@method_decorator(login_required, name='dispatch')
 class GroupCreateView(CreateView):
     model = Group
     form_class = GroupForm

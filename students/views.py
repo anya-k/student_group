@@ -5,8 +5,11 @@ from django.contrib import messages
 from students.models import Student
 from students.forms import StudentForm
 from groups.models import Group
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
 
+@method_decorator(login_required, name='dispatch')
 class StudentListView(generic.ListView):
     model = Student
 
@@ -46,6 +49,7 @@ class StudentDetailView(generic.DetailView):
         return context_data
 
 
+@method_decorator(login_required, name='dispatch')
 class StudentCreateView(generic.CreateView):
     model = Student
     form_class = StudentForm
