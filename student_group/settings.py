@@ -52,6 +52,7 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'student_group.middleware.middleware.SQLLogMiddleware'
 ]
 
 ROOT_URLCONF = 'student_group.urls'
