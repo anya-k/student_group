@@ -4,8 +4,14 @@ from .models import Group
 from students.models import Student
 
 
+class StudentInline(admin.TabularInline):
+    model = Student
+    extra = 1
+
+
 class GroupAdmin(admin.ModelAdmin):
     list_display = ('name', 'amount_person')
+    inlines = [StudentInline,]
 
     def get_form(self, request, obj=None, **kwargs):
         request.current_object = obj
