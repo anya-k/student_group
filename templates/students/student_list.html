@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
+{% load tags %}
 
 
 {% block title %} Студенты {% endblock title %}
@@ -29,7 +30,7 @@
    <table  class="table table-striped ">
     <thead>
       <tr>
-       <th>#</th><th>ФИО</th><th>Староста</th><th></th><th></th>
+       <th>#</th><th>ФИО</th><th>Староста</th><th></th><th></th><th></th>
       </tr>
     </thead>
     <tbody>
@@ -56,6 +57,13 @@
           <form action="{% url 'students:delete' student.id %}">
             <button type="submit" class="btn btn-danger" value="Delete">
               <span class="glyphicon glyphicon-trash"></span> Удалить
+            </button>
+          </form>
+        </td>
+       <td>
+         <form action="{% edit_list student %}">
+            <button type="submit" class="btn btn-success" value="AdminEdit">
+              <span class="glyphicon glyphicon-user"></span> Админ
             </button>
           </form>
         </td>
